@@ -1,25 +1,34 @@
-import logo from './logo.svg';
 import './App.css';
+import React from 'react';
+import axios from 'axios';
+import { TagCloud } from 'react-tagcloud';
 
 function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+  
+  const [post, setPost] = React.useState([]);
+
+  React.useEffect(() => {
+    axios.get('http://localhost:3001/search/cloud').then((response) => {
+      setPost(response.data);
+    });
+  }, []);
+
+  return(
+    <div className='CloudContainer'>
+      <TagCloud
+        className='Cloud'
+        minSize={12}
+        maxSize={35}
+        tags={
+          post.map(item => ({
+            value: item.wordcontent,
+            count: item.amount,
+          }))
+        }
+      />
     </div>
   );
+  
 }
 
 export default App;
