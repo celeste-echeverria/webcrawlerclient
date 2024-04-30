@@ -4,16 +4,15 @@ import axios from 'axios';
 import { TagCloud } from 'react-tagcloud';
 
 function App() {
-  
   const [post, setPost] = React.useState([]);
 
   React.useEffect(() => {
-    axios.get('http://localhost:3001/search/cloud').then((response) => {
+    axios.get('http://localhost:3001/cloud').then((response) => {
       setPost(response.data);
     });
   }, []);
 
-  return(
+  return (
     <div className='CloudContainer'>
       <TagCloud
         className='Cloud'
@@ -28,7 +27,7 @@ function App() {
       />
     </div>
   );
-  
+
 }
 
 export default App;
